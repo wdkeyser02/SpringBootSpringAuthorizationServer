@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.MediaType;
+import org.springframework.http.client.JdkClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
@@ -17,6 +18,7 @@ public class UserService {
 	public UserService() {
 		this.restClient = RestClient.builder()
 				.baseUrl("http://localhost:8080")
+				.requestFactory(new JdkClientHttpRequestFactory())
 				.build();
 	}
 
