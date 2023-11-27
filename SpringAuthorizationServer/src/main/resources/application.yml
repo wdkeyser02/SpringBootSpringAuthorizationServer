@@ -1,0 +1,24 @@
+server:
+  port: 9000
+spring:
+  application:
+    name: authorizationserver
+
+  datasource:
+    url: jdbc:mariadb://192.168.1.30:3306/springboottutorial
+    username: willy
+    password: mO6/DHN[ry
+    driver-class-name: org.mariadb.jdbc.Driver
+  
+  sql:
+    init:
+      mode: always
+jwt:
+  encryptor:
+    password: password
+    salt: 626F6F746966756C
+logging:
+  level:
+    org:
+      springframework:
+        security: INFO    
