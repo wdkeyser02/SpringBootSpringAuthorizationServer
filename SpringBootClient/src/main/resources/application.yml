@@ -1,1 +1,23 @@
-
+server:
+  port: 8080
+spring:
+  application:
+    name: springbootclient
+  thymeleaf:
+    cache: false
+  security:
+    oauth2:
+      client:
+        registration:
+          client:
+            provider: spring
+            client-name: Spring
+            client-id: client
+            client-secret: secret
+            client-authentication-method: client_secret_basic
+            authorization-grant-type: authorization_code
+            scope: openid,profile
+            redirect-uri: http://127.0.0.1:8080/login/oauth2/code/client
+        provider:
+          spring:
+            issuer-uri: http://localhost:9000
