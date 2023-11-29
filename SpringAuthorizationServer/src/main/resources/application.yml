@@ -11,7 +11,6 @@ spring:
     username: willy
     password: mO6/DHN[ry
     driver-class-name: org.mariadb.jdbc.Driver
-  
   sql:
     init:
       mode: always
