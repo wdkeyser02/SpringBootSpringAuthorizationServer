@@ -1,7 +1,6 @@
 package willydekeyser.config;
 
 import java.io.IOException;
-import java.time.Instant;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpRequest;
