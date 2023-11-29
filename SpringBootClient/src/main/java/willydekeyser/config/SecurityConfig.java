@@ -23,7 +23,7 @@ public class SecurityConfig {
         resolver.setAuthorizationRequestCustomizer(OAuth2AuthorizationRequestCustomizers.withPkce());
 		http
 				.authorizeHttpRequests((authorize) -> authorize
-						.requestMatchers("/").permitAll()
+						.requestMatchers("/", "/css/**", "/favicon.ico").permitAll()
 						.anyRequest().authenticated()
 				)
 				.oauth2Login(login -> login

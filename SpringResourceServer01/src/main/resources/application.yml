@@ -4,6 +4,9 @@ server:
 spring:
   application:
     name: resourceserver01
+  threads:
+    virtual:
+      enabled: true
   security:
     oauth2:
       resourceserver:

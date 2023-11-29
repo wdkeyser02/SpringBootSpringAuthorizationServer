@@ -12,7 +12,11 @@
 	<div>
 	<p><a href="/">Home</a> - <a href="/user">Users</a> - <a href="/authority">Authorities</a></p>
 		<h1>Spring Boot Tutorial</h1>
-		<h2>Home</h2>
+		<h2>Authority</h2>
+		<div th:each="authority : ${authorities}">
+			<h3>Username: <span th:text="${authority.username}"></span></h3>
+			<p>Authority: <span th:text="${authority.authority}"></span></p>
+		</div>
 		<p>Willy De Keyser</p>
 	</div>
 </body>

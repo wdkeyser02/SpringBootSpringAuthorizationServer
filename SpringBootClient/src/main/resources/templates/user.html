@@ -12,7 +12,12 @@
 	<div>
 	<p><a href="/">Home</a> - <a href="/user">Users</a> - <a href="/authority">Authorities</a></p>
 		<h1>Spring Boot Tutorial</h1>
-		<h2>Home</h2>
+		<h2>User</h2>
+		<div th:each="user: ${users}">
+			<h3>Username: <span th:text="${user.username}"></span></h3>
+			<p>Password: <span th:text="${user.password}"></span></p>
+			<p>Enabled: <span th:text="${user.enabled}"></span></p>
+		</div>
 		<p>Willy De Keyser</p>
 	</div>
 </body>

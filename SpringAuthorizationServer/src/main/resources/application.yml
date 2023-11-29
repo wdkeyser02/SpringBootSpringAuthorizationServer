@@ -3,7 +3,9 @@ server:
 spring:
   application:
     name: authorizationserver
-
+  threads:
+    virtual:
+      enabled: true
   datasource:
     url: jdbc:mariadb://192.168.1.30:3306/springboottutorial
     username: willy

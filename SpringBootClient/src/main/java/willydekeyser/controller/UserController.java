@@ -2,13 +2,14 @@ package willydekeyser.controller;
 
 import java.util.List;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import willydekeyser.model.User;
 import willydekeyser.service.UserService;
 
-@RestController
+@Controller
 public class UserController {
 
 	private final UserService userService;
@@ -18,7 +19,9 @@ public class UserController {
 	}
 
 	@GetMapping("/user")
-	public List<User> getUsers() {
-		return userService.getUsers();
+	public String getUsers(Model model) {
+		List<User> user = userService.getUsers();
+		model.addAttribute("users", user);
+		return "user";
 	}
 }

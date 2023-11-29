@@ -3,6 +3,9 @@ server:
 spring:
   application:
     name: springbootclient
+  threads:
+    virtual:
+      enabled: true
   thymeleaf:
     cache: false
   security:
@@ -21,3 +24,4 @@ spring:
         provider:
           spring:
             issuer-uri: http://localhost:9000
+restclient-url: http://127.0.0.1:8091            

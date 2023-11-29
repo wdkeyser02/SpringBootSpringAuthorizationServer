@@ -1,16 +1,18 @@
 package willydekeyser.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientManager;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientProvider;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientProviderBuilder;
+import org.springframework.security.oauth2.client.registration.ClientRegistration;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.oauth2.client.web.DefaultOAuth2AuthorizedClientManager;
 import org.springframework.security.oauth2.client.web.OAuth2AuthorizedClientRepository;
-import org.springframework.security.oauth2.client.web.reactive.function.client.ServletOAuth2AuthorizedClientExchangeFilterFunction;
-import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.web.reactive.function.client.support.WebClientAdapter;
+import org.springframework.web.client.RestClient;
+import org.springframework.web.client.support.RestClientAdapter;
 import org.springframework.web.service.invoker.HttpServiceProxyFactory;
 
 import willydekeyser.client.UserClient;
@@ -18,17 +20,22 @@ import willydekeyser.client.UserClient;
 @Configuration
 public class WebClientConfig {
 	
-	@Bean
-	UserClient userClient(OAuth2AuthorizedClientManager authorizedClientManager) {
-		ServletOAuth2AuthorizedClientExchangeFilterFunction oauth2 = 
-				new ServletOAuth2AuthorizedClientExchangeFilterFunction(authorizedClientManager);
-		oauth2.setDefaultOAuth2AuthorizedClient(true);
+	@Value("${spring.security.oauth2.client.registration.client.client-id}")
+	String client_id;
+	@Value("${restclient-url}")
+	String restclient_url;
 		
-		WebClient webClient = WebClient.builder()
-				.baseUrl("http://127.0.0.1:8091")
-				.apply(oauth2.oauth2Configuration())
-				.build();		
-		WebClientAdapter adapter = WebClientAdapter.create(webClient);
+	@Bean
+	UserClient userClient(OAuth2AuthorizedClientManager authorizedClientManager, ClientRegistrationRepository clientRegistrationRepository) {
+		
+		ClientRegistration clientRegistration = clientRegistrationRepository.findByRegistrationId(client_id);
+		ClientHttpRequestInterceptor oauthInterceptor = new OAuthRestClientInterceptor(authorizedClientManager, clientRegistration);
+		RestClient restClient = RestClient.builder()
+				.baseUrl(restclient_url)
+				.requestInterceptor(oauthInterceptor)
+				.build();
+		
+		RestClientAdapter adapter = RestClientAdapter.create(restClient);
 		HttpServiceProxyFactory factory = HttpServiceProxyFactory.builderFor(adapter).build();
 		UserClient userClient = factory.createClient(UserClient.class);
 		return userClient;
