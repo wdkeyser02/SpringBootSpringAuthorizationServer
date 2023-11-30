@@ -18,7 +18,7 @@ import org.springframework.web.service.invoker.HttpServiceProxyFactory;
 import willydekeyser.client.UserClient;
 
 @Configuration
-public class WebClientConfig {
+public class RestClientConfig {
 	
 	@Value("${spring.security.oauth2.client.registration.client.client-id}")
 	String client_id;
