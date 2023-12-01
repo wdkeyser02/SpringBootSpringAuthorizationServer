@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="https://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Spring Boot Tutorial</title>
+<link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+	<div>
+	<p><a href="/">Home</a> - <a href="/user">Users</a> - <a href="/authority">Authorities</a></p>
+		<h1>Spring Boot Tutorial</h1>
+		<h2>Create User</h2>
+		<div class="error" th:if="${error}">Invalid username and password.</div>
+		<form class="main" action="#" th:action="@{/user}" th:object="${user}" method="post">
+    	<p><label for="username">Username: </label><input id="username" type="text" th:field="*{username}" placeholder="Username" required autofocus /></p>
+        <p><label for="password">Password: </label><input id="password" type="text" th:field="*{password}" placeholder="Password" required /></p>
+        <p><label for="enabled">Enabled: </label><input id="enabled" type="checkbox" th:field="*{enabled}" /></p>
+        <p><label for="roles">Roles: </label></p>
+        <p th:each="role : ${allRoles}" >
+        	<input class="tab" id="roles" type="checkbox" name="roles" th:text="${role}" th:value="${role}" th:field="*{authority}" />
+        </p>
+        <p><input type="submit" value="Submit" /> 
+        <input type="reset" value="Reset" /></p>
+    </form>
+		<p>Willy De Keyser</p>
+	</div>
+</body>
+</html>

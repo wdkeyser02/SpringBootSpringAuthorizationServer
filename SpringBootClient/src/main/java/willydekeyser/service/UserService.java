@@ -19,4 +19,8 @@ public class UserService {
 	public List<User> getUsers() {
 		return this.userClient.getUsers();
 	}
+	
+	public Integer createUser(User user) {
+		return this.userClient.createUser(user);
+	}
 }

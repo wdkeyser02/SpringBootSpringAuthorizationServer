@@ -5,3 +5,12 @@ body {
 h1 {
 	color: green;
 }
+
+.main{
+	margin: 25px;
+}
+
+.tab {
+	 display: inline-block;
+     margin-left: 60px;
+}
