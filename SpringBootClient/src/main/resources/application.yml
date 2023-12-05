@@ -24,6 +24,10 @@ spring:
         provider:
           spring:
             issuer-uri: http://localhost:9000
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
 restclient-url: http://127.0.0.1:8091
 logging:
   level:

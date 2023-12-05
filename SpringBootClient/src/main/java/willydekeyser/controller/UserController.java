@@ -7,19 +7,24 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import willydekeyser.model.User;
+import willydekeyser.service.RoleService;
 import willydekeyser.service.UserService;
 
 @Controller
 public class UserController {
 
 	private final UserService userService;
+	private final RoleService roleService;
 	
-	public UserController(UserService userService) {
+	public UserController(UserService userService, RoleService roleService) {
 		this.userService = userService;
+		this.roleService = roleService;
 	}
 
 	@GetMapping("/user")
@@ -29,14 +34,27 @@ public class UserController {
 		return "user";
 	}
 	
-	@GetMapping("/userform")
+	@GetMapping("/user/{username}")
+	public String getUserByUsername(Model model, @PathVariable String username) {
+		User user = userService.getUserByUsername(username);
+		model.addAttribute("user", user);
+		return "userbyusername";
+	}
+	
+	@GetMapping("/createuser")
 	public String userForm(Model model, @RequestParam(defaultValue = "false") Boolean error) {
 		model.addAttribute("user", new User("", "",false, new ArrayList<>()));
-		List<String> roles = new ArrayList<String>();
-		roles.add("ROLE_USER");
-		roles.add("ROLE_ADMIN");
-	    roles.add("ROLE_DEVELOPER");
-	    model.addAttribute("allRoles", roles);
+		model.addAttribute("method", "post");
+	    model.addAttribute("allRoles", roleService.getRoles());
+	    model.addAttribute("error", error);
+		return "userform";
+	}
+	
+	@GetMapping("/updateuser/{username}")
+	public String userFormUpdate(Model model, @RequestParam(defaultValue = "false") Boolean error, @PathVariable String username) {
+		model.addAttribute("user", userService.getUserByUsername(username));
+		model.addAttribute("method", "put");
+	    model.addAttribute("allRoles", roleService.getRoles());
 	    model.addAttribute("error", error);
 		return "userform";
 	}
@@ -45,8 +63,23 @@ public class UserController {
 	public String createUser(@ModelAttribute User user) {
 		Integer row = userService.createUser(user);
 		if (row == 0) {
-			return "redirect:userform?error=true";
+			return "redirect:/createuser?error=true";
 		}
-		return "redirect:user";
+		return "redirect:/user";
+	}
+	
+	@PutMapping("/user")
+	public String updateUser(@ModelAttribute User user) {
+		Integer row = userService.updateUser(user);
+		if (row == 0) {
+			return "redirect:/updateuser?error=true";
+		}
+		return "redirect:/user";
+	}
+	
+	@GetMapping("/deleteuser/{username}")
+	public String deleteUser(@PathVariable String username) {
+		userService.deleteUser(username);
+		return "redirect:/user";
 	}
 }

@@ -10,7 +10,38 @@ h1 {
 	margin: 25px;
 }
 
+.center{
+	text-align: center;
+}
+
 .tab {
 	 display: inline-block;
      margin-left: 60px;
+}
+
+.link{
+	display: inline-block;
+	width: 300px;
+}
+
+.update{
+	display: inline-block;
+	margin: 0px 10px;
+	padding: 5px 10px;
+	text-decoration: none;
+	color: black;
+	background-color: green;
+}
+
+.delete{
+	display: inline-block;
+	margin: 0px 10px;
+	padding: 5px 10px;
+	text-decoration: none;
+	color: red;
+	background-color: green;
+}
+
+.error{
+	color: red;
 }

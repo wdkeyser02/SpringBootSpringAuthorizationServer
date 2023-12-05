@@ -20,7 +20,19 @@ public class UserService {
 		return this.userClient.getUsers();
 	}
 	
+	public User getUserByUsername(String username) {
+		return this.userClient.getUserByUsername(username);
+	}
+	
 	public Integer createUser(User user) {
 		return this.userClient.createUser(user);
+	}
+	
+	public Integer updateUser(User user) {
+		return this.userClient.updateUser(user);
+	}
+	
+	public Integer deleteUser(String username) {
+		return this.userClient.deleteuser(username);
 	}
 }
