@@ -10,15 +10,21 @@
 </head>
 <body>
 	<div>
-	<p><a href="/">Home</a> - <a href="/user">Users</a> - <a href="/createuser">New User</a> - <a href="/authority">Authorities</a></p>
-	<h1>Spring Boot Tutorial</h1>
-	<h2>Users</h2>
-	<div th:each="user: ${users}">
-		<p class="tab"><a class="link" th:href="@{/user/{username}(username=${user.username})}" th:text="${user.username}"></a>
-		<a class="update"  th:href="@{/updateuser/{username}(username=${user.username})}" th:text="Update"></a>
-		<a class="delete"  th:href="@{/deleteuser/{username}(username=${user.username})}" th:text="Delete"></a></p>
+	<div th:replace="~{templates :: navbar}"></div>
+	<div class="main">
+		<h1>Spring Boot Tutorial</h1>
 	</div>
-	<p class="center">Willy De Keyser</p>
+	<div class="text">
+		<h2>Users</h2>
+		<div th:each="user: ${users}">
+			<p class="tab">
+				<a class="user-link" th:href="@{/user/{username}(username=${user.username})}" th:text="${user.username}"></a>
+				<a class="update"  th:href="@{/updateuser/{username}(username=${user.username})}" th:text="Update"></a>
+				<a class="delete"  th:href="@{/deleteuser/{username}(username=${user.username})}" th:text="Delete"></a>
+			</p>
+		</div>
+	</div>
+	<div th:replace="~{templates :: footer}"></div>
 	</div>
 </body>
 </html>

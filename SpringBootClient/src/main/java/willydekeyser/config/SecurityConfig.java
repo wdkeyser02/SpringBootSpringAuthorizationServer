@@ -6,11 +6,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.oauth2.client.oidc.web.logout.OidcClientInitiatedLogoutSuccessHandler;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.oauth2.client.web.DefaultOAuth2AuthorizationRequestResolver;
 import org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestCustomizers;
 import org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -23,7 +25,7 @@ public class SecurityConfig {
         resolver.setAuthorizationRequestCustomizer(OAuth2AuthorizationRequestCustomizers.withPkce());
 		http
 				.authorizeHttpRequests((authorize) -> authorize
-						.requestMatchers("/", "/css/**", "/favicon.ico").permitAll()
+						.requestMatchers("/", "/index", "/css/**", "/favicon.ico", "/logged-out").permitAll()
 						.anyRequest().authenticated()
 				)
 				.oauth2Login(login -> login
@@ -31,7 +33,16 @@ public class SecurityConfig {
 						.authorizationEndpoint(authorizationEndpointConfig -> authorizationEndpointConfig
 								.authorizationRequestResolver(resolver))
 						)
+				.logout(logout -> logout
+						.logoutUrl("/logout")
+						.logoutSuccessHandler(oidcLogoutSuccessHandler(clientRegistrationRepository)))
 				.oauth2Client(withDefaults());
 		return http.build();
+	}
+	
+	private LogoutSuccessHandler oidcLogoutSuccessHandler(ClientRegistrationRepository clientRegistrationRepository) {
+		OidcClientInitiatedLogoutSuccessHandler oidcLogoutSuccessHandler = new OidcClientInitiatedLogoutSuccessHandler(clientRegistrationRepository);
+		oidcLogoutSuccessHandler.setPostLogoutRedirectUri("{baseUrl}/logged-out");
+		return oidcLogoutSuccessHandler;
 	}
 }

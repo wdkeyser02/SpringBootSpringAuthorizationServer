@@ -10,10 +10,14 @@
 </head>
 <body>
 	<div>
-	<p><a href="/">Home</a> - <a href="/user">Users</a> - <a href="/authority">Authorities</a> - <a href="/oauth2/authorization/client">Login</a></p>
-		<h1>Spring Boot Tutorial</h1>
-		<h2>Home</h2>
-		<p class="center">Willy De Keyser</p>
+		<div th:replace="~{templates :: navbar}"></div>
+		<div class="main">
+			<h1>Spring Boot Tutorial</h1>
+			<div class="text">
+				<h2>Home</h2>
+			</div>
+		</div>	
+		<div th:replace="~{templates :: footer}"></div>
 	</div>
 </body>
 </html>

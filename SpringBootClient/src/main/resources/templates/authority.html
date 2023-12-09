@@ -10,14 +10,18 @@
 </head>
 <body>
 	<div>
-	<p><a href="/">Home</a> - <a href="/user">Users</a> - <a href="/authority">Authorities</a></p>
-		<h1>Spring Boot Tutorial</h1>
-		<h2>Authority</h2>
-		<div th:each="authority : ${authorities}">
-			<h3>Username: <span th:text="${authority.username}"></span></h3>
-			<p>Authority: <span th:text="${authority.authority}"></span></p>
+		<div th:replace="~{templates :: navbar}"></div>
+		<div class="main">
+			<h1>Spring Boot Tutorial</h1>
 		</div>
-		<p>Willy De Keyser</p>
+		<div class="text">	
+			<h2>Authority</h2>
+			<div th:each="authority : ${authorities}">
+				<h3>Username: <span th:text="${authority.username}"></span></h3>
+				<p class="tab">Authority: <span th:text="${authority.authority}"></span></p>
+			</div>
+		</div>
+		<div th:replace="~{templates :: footer}"></div>
 	</div>
 </body>
 </html>

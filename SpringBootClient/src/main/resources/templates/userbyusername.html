@@ -9,9 +9,11 @@
 <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-	<div>
-	<p><a href="/">Home</a> - <a href="/user">Users</a> - <a href="/createuser">New User</a> - <a href="/authority">Authorities</a></p>
+	<div th:replace="~{templates :: navbar}"></div>
+	<div class="main">
 		<h1>Spring Boot Tutorial</h1>
+	</div>
+	<div class="text">
 		<h2>User</h2>
 		<div>
 			<h3>Username: <span th:text="${user.username}"></span></h3>
@@ -21,7 +23,7 @@
 				<p><span class="tab"><span th:text="${role}"></span></span></p>
 			</div></div>
 		</div>
-		<p class="center">Willy De Keyser</p>
 	</div>
+	<div th:replace="~{templates :: footer}"></div>
 </body>
 </html>
