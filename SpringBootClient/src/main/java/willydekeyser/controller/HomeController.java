@@ -1,6 +1,7 @@
 package willydekeyser.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
@@ -17,7 +18,8 @@ public class HomeController {
 	}
 	
 	@GetMapping("/logged-out")
-	public String loggedOut() {
+	public String loggedOut(Model model) {
+		model.addAttribute("logout", "You logged out!");
 		return "index";
 	}
 
