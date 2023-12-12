@@ -14,6 +14,7 @@ import org.springframework.security.oauth2.client.OAuth2AuthorizeRequest;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientManager;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
+import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 
 public class OAuthRestClientInterceptor implements ClientHttpRequestInterceptor {
 	
@@ -35,11 +36,12 @@ public class OAuthRestClientInterceptor implements ClientHttpRequestInterceptor 
 				.withClientRegistrationId(clientRegistration.getRegistrationId())
 				.principal(authentication)
 				.build();
-		OAuth2AuthorizedClient client = authorizedClientManager.authorize(oAuth2AuthorizeRequest);
-		if (client == null) {
-			throw new IllegalStateException("client credentials flow on " + clientRegistration.getRegistrationId() + " failed, client is null");
+		OAuth2AuthorizedClient client;
+		try {
+			client = authorizedClientManager.authorize(oAuth2AuthorizeRequest);
+		} catch (Exception e) {
+			throw new OAuth2AuthenticationException(e.getLocalizedMessage());
 		}
-		
 		request.getHeaders().add(HttpHeaders.AUTHORIZATION, "Bearer " + client.getAccessToken().getTokenValue());
 		return execution.execute(request, body);
 	}

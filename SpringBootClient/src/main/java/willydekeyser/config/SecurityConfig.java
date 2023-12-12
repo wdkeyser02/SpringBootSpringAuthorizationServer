@@ -25,13 +25,15 @@ public class SecurityConfig {
         resolver.setAuthorizationRequestCustomizer(OAuth2AuthorizationRequestCustomizers.withPkce());
 		http
 				.authorizeHttpRequests((authorize) -> authorize
-						.requestMatchers("/", "/index", "/css/**", "/favicon.ico", "/logged-out").permitAll()
+						.requestMatchers("/", "/index", "/css/**", "/favicon.ico", "/logged-out", "/error").permitAll()
 						.anyRequest().authenticated()
 				)
 				.oauth2Login(login -> login
 						.loginPage("/oauth2/authorization/client")
 						.authorizationEndpoint(authorizationEndpointConfig -> authorizationEndpointConfig
 								.authorizationRequestResolver(resolver))
+						.defaultSuccessUrl("/", true)
+						.failureUrl("/")
 						)
 				.logout(logout -> logout
 						.logoutUrl("/logout")

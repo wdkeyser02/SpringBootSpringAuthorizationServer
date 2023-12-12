@@ -21,3 +21,7 @@ logging:
     org:
       springframework:
         security: INFO              
+clean:
+  database:
+    cron.expression: '0 */15 * * * *'
+    days: 0

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="https://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Spring Boot Tutorial</title>
+<link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+	<div>
+		<div th:replace="~{templates :: navbar}"></div>
+		<div class="main">
+			<h1>Spring Boot Tutorial</h1>
+			<div class="text">
+				<h2>Error</h2>
+			</div>
+		</div>	
+		<div th:replace="~{templates :: footer}"></div>
+	</div>
+</body>
+</html>

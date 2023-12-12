@@ -1,0 +1,12 @@
+{"properties": [
+  {
+    "name": "clean.database.cron.expression",
+    "type": "java.lang.String",
+    "description": "A description for 'clean.database.cron.expression'"
+  },
+  {
+    "name": "clean.database.days",
+    "type": "java.lang.String",
+    "description": "A description for 'clean.database.days'"
+  }
+]}
